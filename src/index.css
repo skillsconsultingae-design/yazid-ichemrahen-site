@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ *  Direction artistique — tokens (Tailwind v4 @theme)
+ *
+ *  Inspiration : yazid-ichemrahen.com — luxe monochrome, noir & ivoire,
+ *  fort contraste, beaucoup de vide, éditorial. « Élégance · Exigence ·
+ *  Excellence ». Une touche de champagne, employée avec parcimonie.
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-noir: #0a0908; /* presque noir — fonds, scènes intimes */
+  --color-coal: #131210; /* noir réchauffé — sections alternées */
+  --color-ivory: #f4f1ea; /* ivoire — sections claires, texte sur noir */
+  --color-stone: #8d877c; /* texte secondaire, labels */
+  --color-line: rgba(244, 241, 234, 0.14); /* filets sur fond sombre */
+  --color-accent: #b9a98c; /* champagne discret — petits labels, hairlines */
+
+  /* alias rétro-compat (anciens noms encore référencés) */
+  --color-bone: #f4f1ea;
+  --color-ink: #0a0908;
+  --color-warm: #0a0908;
+  --color-dim: #8d877c;
+
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-body: "Jost", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ *
+ *  Base
+ * ------------------------------------------------------------------ */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-noir);
+    color: var(--color-ivory);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* Titres éditoriaux — Cormorant, casse mixte, déliés.
+     (l'uppercase est réservé aux petits labels via .label) */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.005em;
+  }
+
+  /* Petit label en capitales très espacées — façon enseigne */
+  .label {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    font-weight: 400;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 1px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-noir);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Utilitaires de composition
+ * ------------------------------------------------------------------ */
+
+/* Filet vertical fin (séparateurs éditoriaux) */
+.hairline {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-line) 18%,
+    var(--color-line) 82%,
+    transparent
+  );
+}
+
+/* Lettrage qui révèle au survol (liens de nav) */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: currentColor;
+  transition: transform 0.45s var(--ease-soft);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ------------------------------------------------------------------ *
+ *  Animations d'ambiance — CSS (compositor, jamais de crash WAAPI)
+ * ------------------------------------------------------------------ */
+
+/* Très lent zoom continu — « la scène respire » */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1.03);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.breathe {
+  animation: breathe 28s ease-in-out infinite;
+}
+
+/* Indice de scroll */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+.scroll-bob {
+  display: inline-block;
+  animation: bob 2.2s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------------ *
+ *  prefers-reduced-motion — coupe smooth scroll, parallax & boucles
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  Lenis — styles recommandés pour le smooth scroll
+ * ------------------------------------------------------------------ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
