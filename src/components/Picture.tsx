@@ -15,11 +15,12 @@ export function Picture({
   className?: string
   eager?: boolean
 }) {
+  const base = import.meta.env.BASE_URL
   return (
     <picture>
-      <source srcSet={`/images/${name}.webp`} type="image/webp" />
+      <source srcSet={`${base}images/${name}.webp`} type="image/webp" />
       <img
-        src={`/images/${name}.jpg`}
+        src={`${base}images/${name}.jpg`}
         alt={alt}
         loading={eager ? 'eager' : 'lazy'}
         fetchPriority={eager ? 'high' : 'auto'}

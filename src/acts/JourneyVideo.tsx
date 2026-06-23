@@ -79,8 +79,8 @@ export function JourneyVideo() {
       >
         <video
           ref={videoRef}
-          src="/videos/video.mp4"
-          poster="/videos/video_poster.jpg"
+          src={`${import.meta.env.BASE_URL}videos/video.mp4`}
+          poster={`${import.meta.env.BASE_URL}videos/video_poster.jpg`}
           muted
           loop
           autoPlay
@@ -110,8 +110,8 @@ export function JourneyVideo() {
       <div className="sticky top-0 h-screen overflow-hidden">
         <video
           ref={videoRef}
-          src="/videos/video.mp4"
-          poster="/videos/video_poster.jpg"
+          src={`${import.meta.env.BASE_URL}videos/video.mp4`}
+          poster={`${import.meta.env.BASE_URL}videos/video_poster.jpg`}
           muted
           playsInline
           preload="auto"
